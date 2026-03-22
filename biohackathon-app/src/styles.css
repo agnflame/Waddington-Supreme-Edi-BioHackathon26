@@ -1,0 +1,491 @@
+/* ===== DESIGN TOKENS ===== */
+:root {
+  /* Background */
+  --bg-page: #F4F3EE;
+  --bg-surface: #FFFFFF;
+  --bg-surface-alt: #FAF9F6;
+
+  /* Text */
+  --text-primary: #2D2D2D;
+  --text-secondary: #6B6B6B;
+  --text-tertiary: #9A9A9A;
+
+  /* Accent — warm amber/gold */
+  --accent-50: #FAEEDA;
+  --accent-100: #FAC775;
+  --accent-200: #EF9F27;
+  --accent-400: #BA7517;
+  --accent-600: #854F0B;
+  --accent-800: #633806;
+  --accent-900: #412402;
+
+  /* Borders */
+  --border-light: rgba(0, 0, 0, 0.08);
+  --border-medium: rgba(0, 0, 0, 0.14);
+
+  /* Typography */
+  --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-serif: 'Source Serif 4', Georgia, serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Spacing */
+  --section-gap: 3.5rem;
+  --content-max: 780px;
+  --content-padding: 1.5rem;
+
+  /* Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+}
+
+/* ===== RESET & BASE ===== */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  color: var(--text-primary);
+  background: var(--bg-page);
+  line-height: 1.65;
+}
+
+/* ===== LAYOUT ===== */
+.page {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 0 var(--content-padding);
+}
+
+/* ===== SECTIONS ===== */
+.section {
+  padding: var(--section-gap) 0;
+  position: relative;
+}
+
+.section + .section {
+  border-top: 1px solid var(--border-light);
+}
+
+.section-label {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent-400);
+  margin-bottom: 0.5rem;
+}
+
+.section-title {
+  font-size: 1.375rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+  line-height: 1.3;
+}
+
+.section-desc {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+  max-width: 600px;
+}
+
+/* ===== HERO ===== */
+.hero {
+  text-align: center;
+  padding: 5rem 0 3rem;
+}
+
+.hero-label {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-400);
+  margin-bottom: 0.75rem;
+}
+
+.hero-title {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  line-height: 1.25;
+  margin-bottom: 0.5rem;
+}
+
+.hero-subtitle {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  max-width: 520px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.hero-accent {
+  display: inline-block;
+  width: 40px;
+  height: 3px;
+  background: var(--accent-200);
+  border-radius: 2px;
+  margin-top: 1.25rem;
+}
+
+/* ===== PIPELINE FIGURE ===== */
+.pipeline-figure {
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface);
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.pipeline-figure img,
+.pipeline-figure svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.pipeline-placeholder {
+  color: var(--text-tertiary);
+  font-size: 0.8125rem;
+  font-style: italic;
+}
+
+/* ===== REACTIONS ===== */
+.reaction-block {
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface);
+  padding: 1.25rem 1.5rem;
+}
+
+.reaction-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.625rem 0;
+}
+
+.reaction-row + .reaction-row {
+  border-top: 1px solid var(--border-light);
+}
+
+.reaction-num {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: var(--accent-400);
+  min-width: 1.25rem;
+  flex-shrink: 0;
+}
+
+.reaction-eq {
+  flex: 1;
+}
+
+.reaction-eq .katex {
+  font-size: 1rem;
+}
+
+.reaction-label {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ===== TABS ===== */
+.tab-row {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 0.75rem 0.5rem;
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.2s;
+}
+
+.tab-btn:hover {
+  color: var(--text-primary);
+}
+
+.tab-btn.active {
+  color: var(--accent-400);
+}
+
+.tab-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--accent-200);
+  border-radius: 1px;
+}
+
+.tab-panel {
+  padding: 1.5rem 0;
+}
+
+.model-assumptions {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+}
+
+.model-subtitle {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.model-text {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* ===== PLOT GRID ===== */
+.plot-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.plot-card {
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface);
+  padding: 1rem;
+  text-align: center;
+}
+
+.plot-card img,
+.plot-card svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.plot-placeholder {
+  color: var(--text-tertiary);
+  font-size: 0.75rem;
+  font-style: italic;
+  padding: 2rem 0;
+}
+
+/* ===== PARAMETER TABLE ===== */
+.param-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface);
+}
+
+.param-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8125rem;
+}
+
+.param-table th {
+  text-align: left;
+  padding: 0.75rem 1rem;
+  font-weight: 500;
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-medium);
+  background: var(--bg-surface-alt);
+}
+
+.param-table th:first-child {
+  border-radius: var(--radius-lg) 0 0 0;
+}
+
+.param-table th:last-child {
+  border-radius: 0 var(--radius-lg) 0 0;
+}
+
+.param-table td {
+  padding: 0.625rem 1rem;
+  border-bottom: 1px solid var(--border-light);
+  color: var(--text-primary);
+  vertical-align: middle;
+}
+
+.param-table tr:last-child td {
+  border-bottom: none;
+}
+
+.param-table .na {
+  color: var(--text-tertiary);
+  font-style: italic;
+}
+
+.param-badge {
+  display: inline-block;
+  padding: 0.125rem 0.5rem;
+  background: var(--accent-50);
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--accent-600);
+}
+
+.param-desc {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+/* ===== BIOREACTOR ===== */
+.bioreactor-layout {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+.bioreactor-text {
+  flex: 1;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.bioreactor-figure {
+  flex: 0 0 240px;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface);
+  padding: 1rem;
+  text-align: center;
+}
+
+/* ===== PROTEIN VIEWER ===== */
+.viewer-container {
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface);
+  overflow: hidden;
+  position: relative;
+}
+
+.viewer-canvas {
+  width: 100%;
+  height: 450px;
+  display: block;
+}
+
+.viewer-caption {
+  padding: 0.75rem 1rem;
+  border-top: 1px solid var(--border-light);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* ===== MM EQUATION ===== */
+.mm-equation-block {
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface);
+  padding: 1.25rem 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.mm-equation-block .katex {
+  font-size: 1.125rem;
+}
+
+.mm-targets {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.mm-target-pill {
+  font-size: 0.6875rem;
+  padding: 0.25rem 0.75rem;
+  background: var(--accent-50);
+  border-radius: var(--radius-sm);
+  color: var(--accent-600);
+}
+
+/* ===== UTILITIES ===== */
+.note {
+  font-size: 0.6875rem;
+  color: var(--text-tertiary);
+  margin-top: 0.5rem;
+  font-style: italic;
+}
+
+@media (max-width: 640px) {
+  .plot-grid {
+    grid-template-columns: 1fr;
+  }
+  .bioreactor-layout {
+    flex-direction: column;
+  }
+  .bioreactor-figure {
+    flex: none;
+    width: 100%;
+  }
+  .hero-title {
+    font-size: 1.5rem;
+  }
+}
+
+/* ===== DOWNLOAD BUTTON ===== */
+.download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.5rem;
+  font-size: 0.875rem;
+  font-family: var(--font-body);
+  font-weight: 500;
+  color: var(--accent-800);
+  background: var(--accent-50);
+  border: 1px solid var(--accent-200);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  transition: all 0.15s;
+  cursor: pointer;
+}
+
+.download-btn:hover {
+  background: var(--accent-100);
+  border-color: var(--accent-400);
+}
