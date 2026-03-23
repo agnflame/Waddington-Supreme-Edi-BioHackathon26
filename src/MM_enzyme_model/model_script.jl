@@ -34,7 +34,7 @@ Base.@kwdef struct LevanParams
 
     # Rxn 1: S + LS → G + F-LS (sucrose cleavage)
     k_suc::Float64   = 150.0         # Turnover number [1/s]
-    Km_suc::Float64  = 0.025         # Km for sucrose binding to LS [M]
+    Km_suc::Float64  = 0.0005         # Km for sucrose binding to LS [M]
 
     # Rxn 6: F-LS → LS + F (hydrolysis)
     k_hyd::Float64   = 30.0          # First-order rate constant [1/s]
@@ -44,7 +44,7 @@ Base.@kwdef struct LevanParams
     Km_init_suc::Float64 = 0.05      # Km for sucrose as acceptor [M]
 
     # Rxn 3: F + F-LS → L₁ + LS (initiation, fructose acceptor)
-    k_init_fru::Float64  = 5.0       # Turnover number [1/s]
+    k_init_fru::Float64  = 10.0       # Turnover number [1/s]
     Km_init_fru::Float64 = 0.10      # Km for fructose as acceptor [M]
 
     # Rxn 4a: F-LS + Lₙ → Lₙ₊₁ + LS (elongation, β-2,6)
@@ -56,7 +56,7 @@ Base.@kwdef struct LevanParams
     Km_branch::Float64 = 0.02        # Km for internal units as acceptor [M]
 
     # Rxn 5: Lₙ + LS → Lₙ₋₁ + F-LS (depolymerisation)
-    k_depol::Float64  = 2.0          # Turnover number [1/s]
+    k_depol::Float64  = 1.0          # Turnover number [1/s]
     Km_depol::Float64 = 0.005        # Km for chain binding [M]
 
     # Branching regulators
@@ -95,7 +95,7 @@ env_factor(p::LevanParams) = temp_factor(p) * ph_factor(p)
 Initial concentrations [M] and simulation settings.
 """
 Base.@kwdef struct LevanConditions
-    S_0::Float64     = 0.5            # Initial sucrose [M]
+    S_0::Float64     = 0.12            # Initial sucrose [M]
     G_0::Float64     = 0.0            # Initial glucose [M]
     F_0::Float64     = 0.0            # Initial free fructose [M]
     FLS_0::Float64   = 0.0            # Initial fructosyl-enzyme [M]
@@ -103,7 +103,7 @@ Base.@kwdef struct LevanConditions
     mu1_0::Float64   = 0.0            # Initial levan mass (fru units) [M]
     mu2_0::Float64   = 0.0            # Initial second moment [M·DP²]
     B_0::Float64     = 0.0            # Initial branch points [M]
-    t_end::Float64   = 3600.0         # Simulation end time [s]
+    t_end::Float64   = 1800.0         # Simulation end time [s]
 end
 
 "Pack initial conditions into a state vector."
@@ -294,14 +294,33 @@ function plot_results(sol, params::LevanParams, conditions::LevanConditions;
     bf_arr  = [branch_frac(sol, i) .* 100 for i in 1:n]
     yield_arr = [levan_yield(sol, i, S0) .* 100 for i in 1:n]
 
+    # # ── Plot 1: Concentration time courses ──────────────────
+    # p1 = plot(t_min, S_mM, label = "Sucrose", lw = 2,
+    #           xlabel = "Time [min]", ylabel = "Concentration [mM]",
+    #           title = "Small molecule kinetics")
+    # plot!(p1, t_min, G_mM, label = "Glucose", lw = 2)
+    # plot!(p1, t_min, F_mM, label = "Fructose", lw = 2)
+    # plot!(p1, t_min, mu1_mM, label = "Levan (fru units)", lw = 2.5, ls = :dash)
+    # savefig(p1, joinpath(save_dir, "01_concentrations.png"))
     # ── Plot 1: Concentration time courses ──────────────────
-    p1 = plot(t_min, S_mM, label = "Sucrose", lw = 2,
-              xlabel = "Time [min]", ylabel = "Concentration [mM]",
-              title = "Small molecule kinetics")
-    plot!(p1, t_min, G_mM, label = "Glucose", lw = 2)
-    plot!(p1, t_min, F_mM, label = "Fructose", lw = 2)
-    plot!(p1, t_min, mu1_mM, label = "Levan (fru units)", lw = 2.5, ls = :dash)
-    savefig(p1, joinpath(save_dir, "01_concentrations.png"))
+    p1 = plot(
+        t_min, S_mM,
+        label = "Sucrose", lw = 2.5, color = "#BA7517",
+        xlabel = "Time [min]", ylabel = "Concentration [mM]",
+        title = "Small molecule kinetics",
+        legend = :bottomright,
+        grid = :y, gridalpha = 0.15,
+        size = (700, 420),
+        margin = 5Plots.mm,
+        fontfamily = "sans-serif",
+        fg_legend = :transparent,
+        bg_legend = :transparent
+    )
+    plot!(p1, t_min, G_mM,   label = "Glucose",          lw = 2,   color = "#1D9E75")
+    plot!(p1, t_min, F_mM,   label = "Fructose",         lw = 2,   color = "#378ADD")
+    plot!(p1, t_min, mu1_mM, label = "Levan (fru units)", lw = 2.5, color = "#D85A30", ls = :dash)
+
+    savefig(p1, joinpath(save_dir, "01_concentrations.svg"))
 
     # ── Plot 2: Enzyme state ────────────────────────────────
     p2 = plot(t_min, FLS_uM, label = "F-LS (loaded)", lw = 2,

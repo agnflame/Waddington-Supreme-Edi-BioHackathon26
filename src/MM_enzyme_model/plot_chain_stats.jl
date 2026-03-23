@@ -52,14 +52,39 @@ function plot_chain_statistics(sol, params::LevanParams, conditions::LevanCondit
 
     # ── Plot ─────────────────────────────────────────────────
 
-    # Panel 1: Chain count and levan mass
-    p1 = plot(t_min, mu0_mM, label = "Chains (μ₀)", lw = 2,
-              xlabel = "Time [min]", ylabel = "mM",
-              title = "Chain population", color = :steelblue)
+    # # Panel 1: Chain count and levan mass
+    # p1 = plot(t_min, mu0_mM, label = "Chains (μ₀)", lw = 2,
+    #           xlabel = "Time [min]", ylabel = "mM",
+    #           title = "Chain population", color = :steelblue)
+    # p1b = twinx(p1)
+    # plot!(p1b, t_min, mu1_mM, label = "Levan mass (μ₁)", lw = 2,
+    #       ylabel = "mM fru units", color = :crimson, ls = :dash,
+    #       legend = :right)
+    # ── Chain count and levan mass (dual axis) ──────────────
+    p1 = plot(
+        t_min, mu0_mM,
+        label = "Chains (μ₀)", lw = 2.5, color = "#378ADD",
+        xlabel = "Time [min]", ylabel = "Chains [mM]",
+        title = "Chain population & levan mass",
+        grid = :y, gridalpha = 0.15,
+        size = (700, 420),
+        margin = 5Plots.mm,
+        fontfamily = "sans-serif",
+        legend = :bottomright,
+        fg_legend = :transparent,
+        bg_legend = :transparent
+    )
+
     p1b = twinx(p1)
-    plot!(p1b, t_min, mu1_mM, label = "Levan mass (μ₁)", lw = 2,
-          ylabel = "mM fru units", color = :crimson, ls = :dash,
-          legend = :right)
+    plot!(p1b, t_min, mu1_mM,
+        label = "Levan mass (μ₁)", lw = 2.5, color = "#D85A30", ls = :dash,
+        ylabel = "Levan [mM fru units]",
+        legend = :right,
+        fg_legend = :transparent,
+        bg_legend = :transparent
+    )
+
+    savefig(p1, "plots/02_chain_population.svg")
 
     # Panel 2: Average DP
     p2 = plot(t_min, dp_arr, label = "DPₙ", lw = 2.5,

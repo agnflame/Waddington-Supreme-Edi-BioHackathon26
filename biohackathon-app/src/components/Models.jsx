@@ -4,6 +4,8 @@ import Latex from './Latex'
 import massActionChain from '../assets/plots/mass-action-chain.svg'
 import AgentModelPlot from '../assets/plots/agent_model_plot.svg'
 import Concgif from '../assets/plots/sum20_species.gif'
+import MMconc from '../assets/plots/01_concentrations.svg'
+import MMchain from '../assets/plots/02_chain_population.svg'
 
 const TAB_LABELS = ['Mass action', 'Michaelis–Menten', 'Agent-based', 'Parameters']
 
@@ -160,8 +162,8 @@ const models = [
     description:
       'Quasi-steady-state approximation applied to the enzyme–substrate complex. Replaces explicit F‑LS tracking with Vmax and Km parameters, reducing system dimensionality.',
     plots: [
-      { label: 'Reaction velocity vs [S]', file: 'mm-velocity.svg' },
-      { label: 'Product formation over time', file: 'mm-products.svg' }
+      { label: 'Reaction velocity vs [S]', src: MMconc },
+      { label: 'Product formation over time', src: MMchain }
     ]
   },
   {
